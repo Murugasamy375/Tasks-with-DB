@@ -8,8 +8,18 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+CA_CERT_PATH = os.getenv(
+    "CA_CERT_PATH",
+    "certs/ca.pem"
+)
+
 engine = create_engine(
     DATABASE_URL,
+    connect_args={
+        "ssl": {
+            "ca": CA_CERT_PATH
+        }
+    },
     echo=True
 )
 
